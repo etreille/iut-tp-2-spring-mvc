@@ -34,16 +34,18 @@ public class RootControllerTest {
   @Test
   public void rootShouldContainTitleAndBody() throws Exception {
     String headerName = "headerName";
+    String acceptHtml = "text/html";
+    String headerValue = "headerValue";
     MvcResult mvcResult = this.mockMvc.perform(
         get("/")
-            .accept("text/html")
-            .header(headerName, "headerValue")
+            .accept(acceptHtml)
+            .header(headerName, headerValue)
     )
         .andExpect(status().isOk())
         .andReturn();
     String html = mvcResult.getResponse().getContentAsString();
-    assertThat(html).contains("Accept");
-    assertThat(html).contains(headerName);
+    assertThat(html).contains("Accept", acceptHtml);
+    assertThat(html).contains(headerName, headerValue);
   }
 
 }
