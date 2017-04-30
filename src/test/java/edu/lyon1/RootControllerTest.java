@@ -58,4 +58,12 @@ public class RootControllerTest {
         .andExpect(content().string("OK"));
   }
 
+  @Test
+  public void userGetShouldExist() throws Exception {
+    this.mockMvc.perform(
+        get("/user"))
+        .andExpect(status().isOk())
+        .andExpect(content().string("Moi"));
+  }
+
 }
