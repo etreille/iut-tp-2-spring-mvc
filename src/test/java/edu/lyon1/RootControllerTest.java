@@ -68,7 +68,7 @@ public class RootControllerTest {
             .param("prenom", prenom)
     )
         .andExpect(status().isOk())
-        .andExpect(content().string(prenom + " " + nom));
+        .andExpect(content().json("{ prenom: \"" + prenom + "\", nom: \"" + nom + "\" }"));
   }
 
 }
