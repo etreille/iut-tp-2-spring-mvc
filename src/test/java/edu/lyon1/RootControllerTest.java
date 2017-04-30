@@ -71,4 +71,33 @@ public class RootControllerTest {
         .andExpect(content().json("{ prenom: \"" + prenom + "\", nom: \"" + nom + "\" }"));
   }
 
+  private void browserShouldBeIdentified(String userAgent, String nom) throws Exception {
+    this.mockMvc.perform(
+        get("/browser")
+            .header("User-Agent", userAgent)
+    )
+        .andExpect(status().isOk())
+        .andExpect(content().json("{ userAgent: \"" + userAgent + "\", nom: \"" + nom + "\" }"));
+  }
+
+  @Test
+  public void mozillaShouldBeIdentified() throws Exception {
+    browserShouldBeIdentified("Firefox/40.1", "Firefox");
+  }
+
+  @Test
+  public void ieShouldBeIdentified() throws Exception {
+    browserShouldBeIdentified("MSIE", "Internet Explorer");
+  }
+
+  @Test
+  public void safariShouldBeIdentified() throws Exception {
+    browserShouldBeIdentified("AppleWebKit/537.75.14", "Safari");
+  }
+
+  @Test
+  public void chromeShouldBeIdentified() throws Exception {
+    browserShouldBeIdentified("Chrome/41.0.2228.0", "Chrome");
+  }
+
 }
