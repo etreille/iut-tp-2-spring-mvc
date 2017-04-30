@@ -2,6 +2,8 @@ package edu.lyon1;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
@@ -46,6 +48,14 @@ public class RootControllerTest {
     String html = mvcResult.getResponse().getContentAsString();
     assertThat(html).contains("Accept", acceptHtml);
     assertThat(html).contains(headerName, headerValue);
+  }
+
+  @Test
+  public void rootPostShouldExist() throws Exception {
+    this.mockMvc.perform(
+        post("/"))
+        .andExpect(status().isOk())
+        .andExpect(content().string("OK"));
   }
 
 }
