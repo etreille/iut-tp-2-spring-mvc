@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
@@ -18,8 +20,8 @@ import java.util.stream.Stream;
 @RequestMapping("/")
 public class RootController {
 
-  @RequestMapping("/")
-  public ModelAndView test(@RequestHeader HttpHeaders headers, HttpServletResponse response) {
+  @RequestMapping(value="/" , method= RequestMethod.GET)
+  public ModelAndView get(@RequestHeader HttpHeaders headers, HttpServletResponse response) {
     ModelAndView mav = new ModelAndView();
 
     List<HttpHeader> headersList = new ArrayList<HttpHeader>();
@@ -38,6 +40,14 @@ public class RootController {
 
     mav.setViewName("template");
     return mav;
+  }
+
+  @RequestMapping(value="/" , method= RequestMethod.POST)
+  @ResponseBody
+  public String post(@RequestHeader HttpHeaders headers, HttpServletResponse response) {
+
+
+    return "OK";
   }
 
   private class HttpHeader {
