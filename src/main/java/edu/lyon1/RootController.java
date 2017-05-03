@@ -50,6 +50,13 @@ public class RootController {
     return "OK";
   }
 
+  @RequestMapping(value="/user" , method= RequestMethod.GET)
+  @ResponseBody
+  public String userGet(@RequestHeader HttpHeaders headers, HttpServletResponse response) {
+
+    return "Moi";
+  }
+
   private class HttpHeader {
     private final String name;
     private final String value;
