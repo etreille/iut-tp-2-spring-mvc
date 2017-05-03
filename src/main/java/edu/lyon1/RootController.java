@@ -6,10 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
@@ -44,7 +41,7 @@ public class RootController {
 
   @RequestMapping(value="/" , method= RequestMethod.POST)
   @ResponseBody
-  public String post(@RequestHeader HttpHeaders headers, HttpServletResponse response) {
+  public String post() {
 
 
     return "OK";
@@ -52,9 +49,9 @@ public class RootController {
 
   @RequestMapping(value="/user" , method= RequestMethod.GET)
   @ResponseBody
-  public String userGet(@RequestHeader HttpHeaders headers, HttpServletResponse response) {
+  public String userGet(@RequestHeader HttpHeaders headers, @RequestParam("nom") String nom, @RequestParam("prenom") String prenom) {
 
-    return "Moi";
+    return prenom + " " + nom;
   }
 
   private class HttpHeader {
