@@ -49,9 +49,9 @@ public class RootController {
 
   @RequestMapping(value="/user" , method= RequestMethod.GET)
   @ResponseBody
-  public String userGet(@RequestHeader HttpHeaders headers, @RequestParam("nom") String nom, @RequestParam("prenom") String prenom) {
+  public User userGet(@RequestHeader HttpHeaders headers, @RequestParam("nom") String nom, @RequestParam("prenom") String prenom) {
 
-    return prenom + " " + nom;
+    return new User(nom, prenom);
   }
 
   private class HttpHeader {
@@ -69,6 +69,24 @@ public class RootController {
 
     public String getValue() {
       return value;
+    }
+  }
+
+  private class User {
+    private final String nom;
+    private final String prenom;
+
+    public User(String nom, String prenom) {
+      this.nom = nom;
+      this.prenom = prenom;
+    }
+
+    public String getNom() {
+      return nom;
+    }
+
+    public String getPrenom() {
+      return prenom;
     }
   }
 
