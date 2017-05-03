@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/")
@@ -20,8 +22,12 @@ public class RootController {
   public ModelAndView test(@RequestHeader HttpHeaders headers, HttpServletResponse response) {
     ModelAndView mav = new ModelAndView();
 
-    List<String> headersList= new ArrayList<String> (headers.keySet());
-    mav.addObject("headers",headers);
+    List<HttpHeader> headersList = new ArrayList<HttpHeader>();
+    //= new ArrayList<String> (headers.keySet());
+    for (Map.Entry<String, List<String>> entry : headers.entrySet()){
+      headersList.add(new HttpHeader(entry.getKey(),entry.getValue().toString()));
+    }
+    mav.addObject("headers",headersList);
     mav.addObject("titre", "IUT");
     if (response.getStatus() == HttpStatus.OK.value()){
       mav.addObject("corps", "Accept");
@@ -32,6 +38,24 @@ public class RootController {
 
     mav.setViewName("template");
     return mav;
+  }
+
+  private class HttpHeader {
+    private final String name;
+    private final String value;
+
+    public HttpHeader(String name, String value) {
+      this.name = name;
+      this.value = value;
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public String getValue() {
+      return value;
+    }
   }
 
 }
