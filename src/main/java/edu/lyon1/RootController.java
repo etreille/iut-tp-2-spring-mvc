@@ -12,8 +12,8 @@ public class RootController {
   @RequestMapping("/")
   public ModelAndView test(HttpServletRequest request) {
     ModelAndView mav = new ModelAndView();
-    mav.addObject("titre", "titre");
-    mav.addObject("corps", "corps");
+    mav.addObject("titre", "IUT");
+    mav.addObject("corps", "bonjour");
     mav.setViewName("template");
     return mav;
   }
