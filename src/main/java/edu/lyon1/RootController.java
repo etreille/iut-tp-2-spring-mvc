@@ -1,6 +1,5 @@
 package edu.lyon1;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpHeaders;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/")
@@ -49,9 +46,18 @@ public class RootController {
 
   @RequestMapping(value="/user" , method= RequestMethod.GET)
   @ResponseBody
-  public User userGet(@RequestHeader HttpHeaders headers, @RequestParam("nom") String nom, @RequestParam("prenom") String prenom) {
+  public User userGet( @RequestHeader HttpHeaders headers, @RequestParam("nom") String nom, @RequestParam("prenom") String prenom) {
 
     return new User(nom, prenom);
+  }
+
+  @RequestMapping(value="/browser", method=RequestMethod.GET)
+  @ResponseBody
+  public UserAgent browserGet (@RequestHeader(value="User-Agent") String userAgent ){
+
+
+
+    return new UserAgent (userAgent);
   }
 
   private class HttpHeader {
@@ -90,4 +96,33 @@ public class RootController {
     }
   }
 
+
+  private class UserAgent {
+    private final String userAgent;
+
+    public UserAgent(String userAgent) {
+      this.userAgent = userAgent;
+
+    }
+
+    public String getUserAgent() {
+      return userAgent;
+    }
+
+    public String getNom() {
+      String nom;
+      switch(userAgent){
+        case "MSIE" :
+          return "Internet Explorer";
+        case "Firefox/40.1" :
+          return "Firefox";
+        case "AppleWebKit/537.75.14" :
+          return "Safari";
+        case "Chrome/41.0.2228.0" :
+          return "Chrome";
+        default :
+          return "cat";
+      }
+    }
+  }
 }
